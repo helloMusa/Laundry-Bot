@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import discord
 import random, os, subprocess, shutil, sys
 
@@ -107,6 +109,31 @@ def is_admin(user):
 def git(*args):
     return subprocess.check_call(['git'] + list(args))
 
+@commands.command()
+async def update(ctx):
+
+    if is_admin(ctx.message.author):
+        if os.path.exists('bot.py'): # remove the old source file
+            os.remove('bot.py')
+        if os.path.exists('Laundry-Bot'): # remove old cloned directory
+            shutil.rmtree('Laundry-Bot')
+        else:
+            pass
+        git('clone', 'https://github.com/helloMusa/Laundry-Bot.git') # Clones repo
+        if os.path.exists('Laundry-Bot/bot.py'): # move file to working directory
+            os.replace('Laundry-Bot/bot.py', '../Laundry-Bot/bot.py')
+            import stat # set execute permissions
+            st = os.stat('bot.py')
+            os.chmod('bot.py', st.st_mode | stat.S_IEXEC)
+        else:
+            pass
+        if os.path.exists('Laundry-Bot'): # cleanup
+            shutil.rmtree('Laundry-Bot')
+        else:
+            pass
+    else:
+        await ctx.send('You are not authorized to use this command.')
+
 
 # Restarts the bot
 @commands.command()
@@ -114,19 +141,6 @@ async def reset(ctx):
 
     if is_admin(ctx.message.author):
         await ctx.send('Restarting Laundry Bot...')
-        if os.path.exists("Laundry-Bot"): # cleanup
-            shutil.rmtree("Laundry-Bot")
-        else:
-            pass
-        git("clone", "https://github.com/helloMusa/Laundry-Bot.git") # Clones repo
-        if os.path.exists("Laundry-Bot/bot.py"): # move file to working directory
-            os.replace("Laundry-Bot/bot.py", "../Laundry-Bot/bot.py")
-        else:
-            pass
-        if os.path.exists("Laundry-Bot"): # cleanup
-            shutil.rmtree("Laundry-Bot")
-        else:
-            pass
         os.execv('/home/ubuntu/laundry_services_bot/Laundry-Bot/bot.py', sys.argv) # Restart the bot
     else:
         await ctx.send('You are not authorized to use this command.')
@@ -134,14 +148,15 @@ async def reset(ctx):
 
 def main():
 
+    if len(sys.argv) < 2:
+        print(f'ERROR 0: No Client Token Provided')
+        sys.exit
+
     client.add_command(load)
     client.add_command(wash)
     client.add_command(dry)
     client.add_command(reset)
-
-    if len(sys.argv) < 2:
-        print(f'ERROR 0: No Client Token Provided')
-        sys.exit
+    client.add_command(update)
 
     bot_token = sys.argv[1]
     client.run(bot_token)
