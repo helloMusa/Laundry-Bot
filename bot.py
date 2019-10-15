@@ -1,6 +1,5 @@
 import discord
-import random, os
-import subprocess
+import random, os, subprocess, shutil
 
 from asyncio import sleep
 from discord.ext import commands
@@ -115,7 +114,14 @@ async def reset(ctx):
 
     if is_admin(ctx.message.author):
         await ctx.send('Restarting Laundry Bot...')
+        if os.path.exists("Laundry-Bot"): # cleanup
+            shutil.rmtree("Laundry-Bot")
+
         git("clone", "https://github.com/helloMusa/Laundry-Bot.git") # Clones repo
+        if os.path.exists("Laundry-Bot/bot.py"): # move file to working directory
+            os.replace("Laundry-Bot/bot.py", "../Laundry-Bot/bot.py")
+        if os.path.exists("Laundry-Bot"): # cleanup
+            shutil.rmtree("Laundry-Bot")
         os.execv('/home/ubuntu/laundry_services_bot/Laundry-Bot/bot.py', sys.argv) # Restart the bot
 
     else:
