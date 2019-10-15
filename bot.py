@@ -117,7 +117,7 @@ async def reset(ctx):
     
     if is_admin(ctx.message.author):
         await ctx.send('Restarting Laundry Bot...')
-        git("clone", "https://github.com/helloMusa/Laundry-Bot") # Clones repo
+        git("clone", "https://github.com/helloMusa/Laundry-Bot.git") # Clones repo
         os.execv('/home/ubuntu/laundry_services_bot/Laundry-Bot/bot.py', sys.argv) # Restart the bot
 
     else:
