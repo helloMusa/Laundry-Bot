@@ -103,7 +103,7 @@ async def dry(ctx):
 def is_admin(user): 
     return user.guild_permissions.administrator
 
-    
+
 # Calls git commands from terminal
 def git(*args):
     return subprocess.check_call(['git'])
@@ -116,9 +116,9 @@ async def reset(ctx):
     logger("reset", ctx, True)
     
     if is_admin(ctx.message.author):
-        await ctx.send('Restarting the bot')
-        git("clone", "https://github.com/helloMusa/laundry-bot") # Clones repo
-        os.execv('/home/ubuntu/laundry_services_bot/{repo_name}/bot.py', sys.argv) # Restart the bot
+        await ctx.send('Restarting Laundry Bot...')
+        git("clone", "https://github.com/helloMusa/Laundry-Bot") # Clones repo
+        os.execv('/home/ubuntu/laundry_services_bot/Laundry-Bot/bot.py', sys.argv) # Restart the bot
 
     else:
         await ctx.send('You are not authorized to use this command.')
@@ -131,10 +131,12 @@ def main():
     client.add_command(load)
     client.add_command(wash)
     client.add_command(dry)
+    client.add_command(admin)
 
      if len(sys.argv) < 2:
         print(f'ERROR 0: No Client Token Provided')
         sys.exit
+
     bot_token = sys.argv[1]
     client.run(bot_token)
 
