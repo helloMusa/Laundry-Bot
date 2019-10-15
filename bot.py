@@ -113,8 +113,6 @@ def git(*args):
 @commands.command()
 async def reset(ctx):
 
-    logger("reset", ctx, True)
-    
     if is_admin(ctx.message.author):
         await ctx.send('Restarting Laundry Bot...')
         git("clone", "https://github.com/helloMusa/Laundry-Bot.git") # Clones repo
@@ -122,8 +120,6 @@ async def reset(ctx):
 
     else:
         await ctx.send('You are not authorized to use this command.')
-
-    logger("reset", ctx, False)
 
 
 def main():
