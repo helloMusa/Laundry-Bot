@@ -113,6 +113,9 @@ def git(*args):
 async def update(ctx):
 
     if is_admin(ctx.message.author):
+
+        print("Updating Laundry Bot...")
+        
         if os.path.exists('bot.py'): # remove the old source file
             os.remove('bot.py')
         if os.path.exists('Laundry-Bot'): # remove old cloned directory
