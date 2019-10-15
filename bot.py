@@ -1,5 +1,5 @@
 import discord
-import random, os, subprocess, shutil
+import random, os, subprocess, shutil, sys
 
 from asyncio import sleep
 from discord.ext import commands
@@ -26,7 +26,7 @@ status = Status(False, None, None)
 
 
 # Load laundry
-@client.command()
+@commands.command()
 async def load(ctx):
 
     # If washing machine not occupied, author of command is wash_user
@@ -42,7 +42,7 @@ async def load(ctx):
 
 
 # Wash laundry 
-@client.command()
+@commands.command()
 async def wash(ctx):
 
     # If the author of command is the same person who loaded the washing machine, ...
@@ -64,7 +64,7 @@ async def wash(ctx):
 
 
 # Dry laundry
-@client.command()
+@commands.command()
 async def dry(ctx):
 
     # If the author of the command has been granted access to the dryer
@@ -116,14 +116,18 @@ async def reset(ctx):
         await ctx.send('Restarting Laundry Bot...')
         if os.path.exists("Laundry-Bot"): # cleanup
             shutil.rmtree("Laundry-Bot")
-
+        else:
+            pass
         git("clone", "https://github.com/helloMusa/Laundry-Bot.git") # Clones repo
         if os.path.exists("Laundry-Bot/bot.py"): # move file to working directory
             os.replace("Laundry-Bot/bot.py", "../Laundry-Bot/bot.py")
+        else:
+            pass
         if os.path.exists("Laundry-Bot"): # cleanup
             shutil.rmtree("Laundry-Bot")
+        else:
+            pass
         os.execv('/home/ubuntu/laundry_services_bot/Laundry-Bot/bot.py', sys.argv) # Restart the bot
-
     else:
         await ctx.send('You are not authorized to use this command.')
 
@@ -135,7 +139,7 @@ def main():
     client.add_command(dry)
     client.add_command(reset)
 
-     if len(sys.argv) < 2:
+    if len(sys.argv) < 2:
         print(f'ERROR 0: No Client Token Provided')
         sys.exit
 
