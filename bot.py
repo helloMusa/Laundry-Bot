@@ -106,7 +106,7 @@ def is_admin(user):
 
 # Calls git commands from terminal
 def git(*args):
-    return subprocess.check_call(['git'])
+    return subprocess.check_call(['git'] + list(args))
 
 
 # Restarts the bot
@@ -131,7 +131,7 @@ def main():
     client.add_command(load)
     client.add_command(wash)
     client.add_command(dry)
-    client.add_command(admin)
+    client.add_command(reset)
 
      if len(sys.argv) < 2:
         print(f'ERROR 0: No Client Token Provided')
