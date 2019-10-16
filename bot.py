@@ -50,9 +50,6 @@ async def unload(ctx):
         status.wash_user == None:
         await ctx.send('The washing machine is now available.')
 
-    else:
-        pass
-
 
 # Wash laundry 
 @commands.command()
@@ -167,6 +164,7 @@ def main():
         sys.exit
 
     client.add_command(load)
+    client.add_command(unload)
     client.add_command(wash)
     client.add_command(dry)
     client.add_command(reset)
