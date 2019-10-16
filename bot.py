@@ -32,7 +32,7 @@ async def load(ctx):
 
     # If washing machine not occupied, author of command is wash_user
     if status.wash_user == None:
-        status.wash_user = ctx.author
+        status.wash_user = ctx.author.mention
         await ctx.send(f'@{status.wash_user}, your laundry has been loaded. Use .wash to wash it.')
 
     # If washing machine occupied, notify user
@@ -45,12 +45,12 @@ async def load(ctx):
 async def unload(ctx):
 
     # If author is person who loaded washing machine, strip access
-    if ctx.author == status.wash_user:
+    if ctx.author.mention == status.wash_user:
         status.wash_user = None
-        await ctx.send('The washing machine is now available.')
 
     elif is_admin(ctx.author):
         status.wash_user = None
+        wait ctx.send('The washing machine is now available. By order of the admins.')
 
     else:
         await ctx.send("Stop fucking with other people's laundry. Thank you.")
@@ -61,10 +61,10 @@ async def unload(ctx):
 async def wash(ctx):
 
     # If the author of command is the same person who loaded the washing machine, ...
-    if ctx.author == status.wash_user:    
+    if ctx.author.mention == status.wash_user:    
         await ctx.send('Starting wash cycle, please wait 30 seconds ...')
         await sleep(30)
-        await ctx.send(f'@{status.wash_user}, your laundry has been washed. Use .dry to dry it.')
+        await ctx.send(f'@{member.mention}, your laundry has been washed. Use .dry to dry it.')
 
         # Grant access for washing machine
         status.dry_user = status.wash_user
@@ -83,7 +83,7 @@ async def wash(ctx):
 async def dry(ctx):
 
     # If the author of the command has been granted access to the dryer
-    if ctx.author == status.dry_user:
+    if ctx.author.mention == status.dry_user:
 
         # If the dryer is not already occupied, it is now. Washing machine gets free'd up.
         if not status.dry_occupied:
@@ -143,6 +143,8 @@ async def update(ctx):
 
         if os.path.exists('Laundry-Bot'): # cleanup
             shutil.rmtree('Laundry-Bot')
+
+        await ctx.send('Laundry Bot is done updating.')
 
     else:
         await ctx.send('You are not authorized to use this command.')
