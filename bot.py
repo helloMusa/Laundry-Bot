@@ -50,7 +50,7 @@ async def unload(ctx):
 
     elif is_admin(ctx.author):
         status.wash_user = None
-        wait ctx.send('The washing machine is now available. By order of the admins.')
+        await ctx.send('The washing machine is now available. By order of the admins.')
 
     else:
         await ctx.send("Stop fucking with other people's laundry. Thank you.")
