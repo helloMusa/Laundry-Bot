@@ -26,7 +26,6 @@ class Status:
 # Preset status to all machines unoccupied
 status = Status(False, None, None)
 
-
 # Load laundry
 @commands.command()
 async def load(ctx):
@@ -47,8 +46,14 @@ async def unload(ctx):
 
     # If author is person who loaded washing machine, strip access
     if ctx.author == status.wash_user:
-        status.wash_user == None
+        status.wash_user = None
         await ctx.send('The washing machine is now available.')
+
+    elif is_admin(ctx.author):
+        status.wash_user = None
+
+    else:
+        await ctx.send("Stop fucking with other people's laundry. Thank you.")
 
 
 # Wash laundry 
@@ -128,20 +133,17 @@ async def update(ctx):
             os.remove('bot.py')
         if os.path.exists('Laundry-Bot'): # remove old cloned directory
             shutil.rmtree('Laundry-Bot')
-        else:
-            pass
+
         git('clone', 'https://github.com/helloMusa/Laundry-Bot.git') # Clones repo
         if os.path.exists('Laundry-Bot/bot.py'): # move file to working directory
             os.replace('Laundry-Bot/bot.py', '../Laundry-Bot/bot.py')
             import stat # set execute permissions
             st = os.stat('bot.py')
             os.chmod('bot.py', st.st_mode | stat.S_IEXEC)
-        else:
-            pass
+
         if os.path.exists('Laundry-Bot'): # cleanup
             shutil.rmtree('Laundry-Bot')
-        else:
-            pass
+
     else:
         await ctx.send('You are not authorized to use this command.')
 
@@ -151,8 +153,9 @@ async def update(ctx):
 async def reset(ctx):
 
     if is_admin(ctx.message.author):
+        # Restart the bot
         await ctx.send('Restarting Laundry Bot...')
-        os.execv('/home/ubuntu/laundry_services_bot/Laundry-Bot/bot.py', sys.argv) # Restart the bot
+        os.execv('/home/ubuntu/laundry_services_bot/Laundry-Bot/bot.py', sys.argv)
     else:
         await ctx.send('You are not authorized to use this command.')
 
