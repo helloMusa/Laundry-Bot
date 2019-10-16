@@ -9,7 +9,7 @@ from discord.ext import commands
 # User loads their laundry first, then washes and dries it
 # After drying, they should be billed a lot of money
 
-prefix = '.'
+prefix = ['.']
 client = commands.Bot(command_prefix = prefix)
 
 @client.event
@@ -47,7 +47,7 @@ async def unload(ctx):
 
     # If author is person who loaded washing machine, strip access
     if ctx.author == status.wash_user:
-        status.wash_user == None:
+        status.wash_user == None
         await ctx.send('The washing machine is now available.')
 
 
