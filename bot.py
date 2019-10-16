@@ -33,7 +33,7 @@ async def load(ctx):
     # If washing machine not occupied, author of command is wash_user
     if status.wash_user == None:
         status.wash_user = ctx.author.mention
-        await ctx.send(f'@{status.wash_user}, your laundry has been loaded. Use .wash to wash it.')
+        await ctx.send(f'{status.wash_user}, your laundry has been loaded. Use .wash to wash it.')
 
     # If washing machine occupied, notify user
     else:
@@ -64,7 +64,7 @@ async def wash(ctx):
     if ctx.author.mention == status.wash_user:    
         await ctx.send('Starting wash cycle, please wait 30 seconds ...')
         await sleep(30)
-        await ctx.send(f'@{member.mention}, your laundry has been washed. Use .dry to dry it.')
+        await ctx.send(f'{member.mention}, your laundry has been washed. Use .dry to dry it.')
 
         # Grant access for washing machine
         status.dry_user = status.wash_user
@@ -92,7 +92,7 @@ async def dry(ctx):
 
             await ctx.send('Starting dry cycle, please wait 30 seconds...')
             await sleep(30)
-            await ctx.send(f'@{status.dry_user}, your laundry has been dried.')
+            await ctx.send(f'{status.dry_user}, your laundry has been dried.')
 
             total = random.randint(100, 15000)
             await ctx.send(f'Your total is ${total}')
