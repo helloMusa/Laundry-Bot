@@ -9,7 +9,7 @@ from discord.ext import commands
 # User loads their laundry first, then washes and dries it
 # After drying, they should be billed a lot of money
 
-prefix = ['.']
+prefix = '.'
 client = commands.Bot(command_prefix = prefix)
 
 @client.event
