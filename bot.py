@@ -40,7 +40,18 @@ async def load(ctx):
     else:
         await ctx.send(f'The machine is currently full with {status.wash_user}\'s laundry.')
 
-    print(status.wash_user)
+
+# Unload laundry
+@commands.command()
+async def unload(ctx):
+
+    # If author is person who loaded washing machine, strip access
+    if ctx.author == status.wash_user:
+        status.wash_user == None:
+        await ctx.send('The washing machine is now available.')
+
+    else:
+        pass
 
 
 # Wash laundry 
