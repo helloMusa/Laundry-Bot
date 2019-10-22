@@ -40,7 +40,7 @@ dry3 = Machine(None, False)
 
 # Load laundry
 @commands.command()
-async def load(ctx):
+async def load(ctx, machine):
 
     if machine == "wash1":
         if wash1.user == None:
