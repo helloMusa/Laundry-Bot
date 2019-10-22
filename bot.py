@@ -38,6 +38,42 @@ dry1 = Machine(None, False)
 dry2 = Machine(None, False)
 dry3 = Machine(None, False)
 
+# Display washing machines
+@commands.command()
+async def washers(ctx):
+
+    # Get current statuses of washers
+    wash_machines = [wash1, wash2, wash3]
+
+    # Print Laundry Rooom
+    await ctx.send(" *** Washing Machines: *** ")
+
+    i = 1
+    for machine in wash_machines:
+        if machine.occupied == False:
+            await ctx.send("Machine #" + str(i) + " : Available!")
+        elif machine.occupied == True:
+            await ctx.send("Machine #" + str(i) + " : In use.")
+        i += 1
+
+# Display drying machines
+@commands.command()
+async def dryers(ctx):
+
+    # Get current status of dryers
+    dry_machines = [dry1, dry2, dry3]
+
+    await ctx.send("\n *** Drying Machines: *** ")
+
+    i = 1
+    for machine in dry_machines:
+        if machine.occupied == False:
+            await ctx.send("Machine #" + str(i) + " : Available!")
+        elif machine.occupied == True:
+            await ctx.send("Machine #" + str(i) + " : In use.")
+        i += 1
+
+
 # Load laundry
 @commands.command()
 async def load(ctx, machine):
@@ -95,15 +131,15 @@ async def unload(ctx, machine):
         await ctx.send('That machine does not exist!')
 
     if is_admin(ctx.author):
-        if machine == "wash1":
+        if machine == "wash1" and wash1.user != None:
             wash1.user = None
             await ctx.send('The washing machine is now available. By order of the admins.')
 
-        elif machine == "wash2":
+        elif machine == "wash2" and wash2.user != None:
             wash2.user = None
             await ctx.send('The washing machine is now available. By order of the admins.')
 
-        elif machine == "wash3":
+        elif machine == "wash3" and wash3.user != None:
             wash3.user = None
             await ctx.send('The washing machine is now available. By order of the admins.')
 
@@ -122,12 +158,13 @@ async def wash(ctx, machine):
                 await ctx.send('You have already washed these clothes. Stop wasting water.')
 
             else:
-                await ctx.send('Starting wash cycle, please wait 3 seconds ...')
-                await sleep(3)
+                wash1.occupied = True
+                await ctx.send('Starting wash cycle, please wait 45 seconds ...')
+                await sleep(45)
                 await ctx.send(f'{wash1.user}, your laundry has been washed. Use .dry (machine) to dry it.')
 
-                wash1.occupied = True
                 dry_users.append(wash1.user)
+                wash1.user = None
 
         elif wash1.user == None:
             await ctx.send('You must load your clothes into the machine (wash1) first!')
@@ -142,12 +179,13 @@ async def wash(ctx, machine):
                 await ctx.send('You have already washed these clothes. Stop wasting water.')
 
             else:
-                await ctx.send('Starting wash cycle, please wait 3 seconds ...')
-                await sleep(3)
+                wash2.occupied = True
+                await ctx.send('Starting wash cycle, please wait 45 seconds ...')
+                await sleep(45)
                 await ctx.send(f'{wash2.user}, your laundry has been washed. Use .dry (machine) to dry it.')
 
-                wash2.occupied = True
                 dry_users.append(wash2.user)
+                wash2.user = None
 
         elif wash2.user == None:
             await ctx.send('You must load your clothes into the machine (wash2) first!')
@@ -162,12 +200,13 @@ async def wash(ctx, machine):
                 await ctx.send('You have already washed these clothes. Stop wasting water.')
 
             else:
-                await ctx.send('Starting wash cycle, please wait 3 seconds ...')
-                await sleep(3)
+                wash3.occupied = True
+                await ctx.send('Starting wash cycle, please wait 45 seconds ...')
+                await sleep(45)
                 await ctx.send(f'{wash3.user}, your laundry has been washed. Use .dry (machine) to dry it.')
 
-                wash3.occupied = True
                 dry_users.append(wash3.user)
+                wash3.user = None
 
         elif wash3.user == None:
             await ctx.send('You must load your clothes into the machine (wash3) first!')
@@ -194,8 +233,8 @@ async def dry(ctx, machine):
 
                 total = random.randint(100, 15000)
 
-                await ctx.send('Starting dry cycle, please wait 3 seconds...')
-                await sleep(3)
+                await ctx.send('Starting dry cycle, please wait 45 seconds...')
+                await sleep(45)
                 await ctx.send(f'{dry1.user}, your laundry has been dried.\nYour total is ${total}.')
 
                 dry_users.remove(dry1.user)
@@ -217,8 +256,8 @@ async def dry(ctx, machine):
 
                 total = random.randint(100, 15000)
 
-                await ctx.send('Starting dry cycle, please wait 3 seconds...')
-                await sleep(3)
+                await ctx.send('Starting dry cycle, please wait 45 seconds...')
+                await sleep(45)
                 await ctx.send(f'{dry2.user}, your laundry has been dried.\nYour total is ${total}.')
 
                 dry_users.remove(dry2.user)
@@ -240,8 +279,8 @@ async def dry(ctx, machine):
 
                 total = random.randint(100, 15000)
 
-                await ctx.send('Starting dry cycle, please wait 3 seconds...')
-                await sleep(3)
+                await ctx.send('Starting dry cycle, please wait 45 seconds...')
+                await sleep(45)
                 await ctx.send(f'{dry3.user}, your laundry has been dried.\nYour total is ${total}.')
 
                 dry_users.remove(dry3.user)
@@ -314,6 +353,8 @@ def main():
     client.add_command(unload)
     client.add_command(wash)
     client.add_command(dry)
+    client.add_command(washers)
+    client.add_command(dryers)
     client.add_command(reset)
     client.add_command(update)
 
