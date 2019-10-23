@@ -124,27 +124,27 @@ async def unload(ctx, machine):
 
     if machine == "wash1":
         if ctx.author.mention == wash1.user or (machine == "wash1" and is_admin(ctx.author)):
+            wash1_users.remove(wash1.user)
             wash1.user = None
             wash1.occupied = False
-            wash1_users.remove(wash1.user)
             await ctx.send('Wash 1 is now available.')
         else:
             await ctx.send('That is not your machine.')
 
     elif machine == "wash2":
         if ctx.author.mention == wash2.user or (machine == "wash2" and is_admin(ctx.author)):
+            wash2_users.remove(wash2.user)
             wash2.user = None
             wash2.occupied = False
-            wash2_users.remove(wash2.user)
             await ctx.send('Wash 2 is now available.')
         else:
             await ctx.send('That is not your machine.')
 
     elif machine == "wash3":
         if ctx.author.mention == wash3.user or (machine == "wash3" and is_admin(ctx.author)):
+            wash3_users.remove(wash3.user)
             wash3.user = None
             wash3.occupied = False
-            wash3_users.remove(wash3.user)
             await ctx.send('Wash 3 is now available.')
         else:
             await ctx.send('That is not your machine.')
