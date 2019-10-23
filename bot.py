@@ -102,7 +102,7 @@ async def load(ctx, machine):
             wash2.occupied = True
             wash2.user = ctx.author.mention
             wash2_users.append(wash2.user)
-            await ctx.send(f'{wash1.user}, your laundry has been loaded into Wash 2. Use .wash wash2 to wash it.')
+            await ctx.send(f'{wash2.user}, your laundry has been loaded into Wash 2. Use .wash wash2 to wash it.')
         else:
             await ctx.send('Please choose an available washing machine. If none are available, please wait.')
 
@@ -366,7 +366,7 @@ async def dry(ctx, machine):
 
                 dry3.user = None
                 dry3.occupied = False
-                
+
 
 # Checks if user is an administrator
 def is_admin(user): 
