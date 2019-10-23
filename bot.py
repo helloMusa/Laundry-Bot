@@ -123,7 +123,7 @@ async def load(ctx, machine):
 async def unload(ctx, machine):
 
     if machine == "wash1":
-        if ctx.author.mention == wash1.user:
+        if ctx.author.mention == wash1.user or (machine == "wash1" and is_admin(ctx.author)):
             wash1.user = None
             wash1.occupied = False
             wash1_users.remove(wash1.user)
@@ -132,7 +132,7 @@ async def unload(ctx, machine):
             await ctx.send('That is not your machine.')
 
     elif machine == "wash2":
-        if ctx.author.mention == wash2.user:
+        if ctx.author.mention == wash2.user or (machine == "wash2" and is_admin(ctx.author)):
             wash2.user = None
             wash2.occupied = False
             wash2_users.remove(wash2.user)
@@ -140,7 +140,7 @@ async def unload(ctx, machine):
         else:
             await ctx.send('That is not your machine.')
 
-    elif machine == "wash3":
+    elif machine == "wash3" or (machine == "wash3" and is_admin(ctx.author)):
         if ctx.author.mention == wash2.user:
             wash3.user = None
             wash3.occupied = False
@@ -151,28 +151,6 @@ async def unload(ctx, machine):
 
     else:
         await ctx.send('That machine does not exist!')
-
-    if is_admin(ctx.author):
-        if machine == "wash1" and wash1.user != None:
-            wash1.user = None
-            wash1.occupied = False
-            wash1_users.remove(wash1.user)
-            await ctx.send('The washing machine is now available. By order of the admins.')
-
-        elif machine == "wash2" and wash2.user != None:
-            wash2.user = None
-            wash2.occupied = False
-            wash2_users.remove(wash2.user)
-            await ctx.send('The washing machine is now available. By order of the admins.')
-
-        elif machine == "wash3" and wash3.user != None:
-            wash3.user = None
-            wash3.occupied = False
-            wash3_users.remove(wash3.user)
-            await ctx.send('The washing machine is now available. By order of the admins.')
-
-    else:
-        pass
 
 
 # Wash laundry 
