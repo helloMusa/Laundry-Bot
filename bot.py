@@ -140,8 +140,8 @@ async def unload(ctx, machine):
         else:
             await ctx.send('That is not your machine.')
 
-    elif machine == "wash3" or (machine == "wash3" and is_admin(ctx.author)):
-        if ctx.author.mention == wash3.user:
+    elif machine == "wash3":
+        if ctx.author.mention == wash3.user or (machine == "wash3" and is_admin(ctx.author)):
             wash3.user = None
             wash3.occupied = False
             wash3_users.remove(wash3.user)
