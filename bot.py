@@ -22,20 +22,23 @@ class Machine:
         self.user = None
         self.occupied = False
 
-
 # Access class to create access lists for machines
 class Access:
     def __init__(self, users):
         self.users = []
-
 
 # Dry users list is empty at first
 dry_access = Access([])
 dry_users = dry_access.users
 
 # Wash users list is empty at first
-wash1_access = wash2_access = wash3_access = Access([])
-wash1_users, wash2_users, wash3_users = wash1_access.users, wash2_access.users, wash3_access.users
+wash1_access = Access([])
+wash2_access = Access([])
+wash3_access = Access([])
+wash1_users = wash1_access.users
+wash2_users = wash2_access.users
+wash3_users = wash3_access.users
+
 
 # Preset status to all machines unoccupied with no users
 wash1 = Machine(None, False)
@@ -44,7 +47,6 @@ wash3 = Machine(None, False)
 dry1 = Machine(None, False)
 dry2 = Machine(None, False)
 dry3 = Machine(None, False)
-
 
 # Display washing machines
 @commands.command()
@@ -115,7 +117,6 @@ async def load(ctx, machine):
 
     else:
         await ctx.send('That machine does not exist!')
-
 
 # Unload laundry
 @commands.command()
@@ -365,8 +366,8 @@ async def dry(ctx, machine):
 
                 dry3.user = None
                 dry3.occupied = False
-
                 
+
 # Checks if user is an administrator
 def is_admin(user): 
     return user.guild_permissions.administrator
