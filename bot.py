@@ -12,13 +12,11 @@ from discord.ext import commands
 prefix = '.'
 client = commands.Bot(command_prefix = prefix)
 
-
 @client.event
 async def on_ready():
       print('Laundry Services bot is ready.')
 
-# Machine c
-lass to create washing and drying machines
+# Machine class to create washing and drying machines
 class Machine:
     def __init__(self, user, occupied):
         self.user = None
