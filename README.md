@@ -1,5 +1,5 @@
 # Laundry-Bot
-A Discord bot to load and wash virtual laundry. 
+A Discord bot to load and wash virtual laundry. Work in progress.
 
 # Commands
 !update: Updates the bot from Github
